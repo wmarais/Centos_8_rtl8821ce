@@ -3,19 +3,58 @@ The original repository notes are included below.
 
 The source code build and the drivers seem to work in Centos 8, HOWEVER, I spend minimum effort making this work so there are possibly issues I introduced from the code mods.
 
-## Installation
+## Install Dev Tools
 Need development tools to build the driver. 
 
 ```bash
-sudo yum groups install "Development Tools"
+# sudo yum groups install "Development Tools"
 ```
 
 Install dkms.
 
 ```bash
-sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
-sudo yum install dkms
+# sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+
+# sudo yum install dkms
 ```
+
+## Signing the Drivers
+Do this if you are using secure boot. If not, probably wont hurt siginig the driver, but probably wont be able to install the key.
+
+```bash
+# openssl req -new -x509 -newkey rsa:2048 -keyout MOK.priv -outform DER -out MOK.der -days 36500 -subj "/CN=My Name/" -nodes
+
+# sudo mokutil --import MOK.der
+
+# sudo mokutil --list-new
+```
+
+Reboot the machine and finish the key enrolment through what ever EFI utility that your computer has.
+
+##Build & Install
+If using secure boot / driver signing, then execute:
+
+```bash
+# sudo ./dkms-install.sh MOK.priv MOK.der
+```
+
+If not using secure boot / driver signing, then execute:
+
+```bash
+# sudo ./dkms-install.sh
+```
+
+Try to load it using:
+
+```bash
+# sudo modprobe 8821ce
+```
+
+At this point, you will now see "WiFi Not Connected" in the network menu. If you go to ```Settings->WiFi```, you should now see all the available wireless networks in range.
+
+To make sure it's working properly, do a restart before doing much else.
+
+Good Luck Folks!
 
 # ORIGINAL REPO NOTES
 ## Intent

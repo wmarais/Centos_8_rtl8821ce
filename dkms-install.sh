@@ -14,6 +14,9 @@ cp -r . /usr/src/${DRV_NAME}-${DRV_VERSION}
 
 dkms add -m ${DRV_NAME} -v ${DRV_VERSION}
 dkms build -m ${DRV_NAME} -v ${DRV_VERSION}
+if [ $# -eq 2 ]; then
+  /usr/src/kernels/4.18.0-147.8.1.el8_1.x86_64/scripts/sign-file sha256 $1 $2 ${DRV_NAME}
+fi
 dkms install -m ${DRV_NAME} -v ${DRV_VERSION}
 RESULT=$?
 
