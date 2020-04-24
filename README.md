@@ -1,5 +1,23 @@
 # Realtek RTL8821CE Driver
+The original repository notes are included below.
 
+The source code build and the drivers seem to work in Centos 8, HOWEVER, I spend minimum effort making this work so there are possibly issues I introduced from the code mods.
+
+## Installation
+Need development tools to build the driver. 
+
+```bash
+sudo yum groups install "Development Tools"
+```
+
+Install dkms.
+
+```bash
+sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+sudo yum install dkms
+```
+
+# ORIGINAL REPO NOTES
 ## Intent
 This repository hosts the code for the [Arch Linux AUR Package](https://aur.archlinux.org/packages/rtl8821ce-dkms-git/). It's targeting Linux > 4.14 and is being developed for Arch Linux and Ubuntu 18.10. No support will be provided for other Linux distributions or Linux Kernel versions outside of that range.
 
